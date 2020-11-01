@@ -1,0 +1,10 @@
+<form class="pure-form pure-form-stacked">
+  <div>
+    <input type = "text" name = "user_name">
+    <button type = "submit" formaction="/memo/new" formmethod="post" class="pure-button pure-button-primary">新規作成</button>
+    <button type = "submit" formaction="<%= "/memo/existing" %>" formmethod="post" class="pure-button pure-button-primary">呼び出し</button>
+  </div>
+</form>
+<div>
+  <p class = "note" >半角英小文字、数字、_（アンダースコア）で4〜16文字</p>
+</div>

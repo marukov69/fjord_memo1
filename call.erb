@@ -1,0 +1,16 @@
+
+<div class = "main">
+  <p>
+    <% File.open("#{@user}.txt") do |f| %>
+      <% f.each_line do |line| %>
+      <%= line %>
+      </br>
+      <% end %>
+    <% end %>
+  </p>
+</div>
+<form action="<%= "/memo/#{@user}/edit" %>" method="get">
+  <div>
+    <input type="submit" value="編集する">
+  </div>
+</form>
