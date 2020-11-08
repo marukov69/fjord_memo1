@@ -1,6 +1,11 @@
-<form action="<%= "/memo/#{@user}" %>" method="patch">
+<form action="<%= "/memo/#{@id}" %>" method="patch">
   <div>
-    <textarea class = "input" name="memo_edited" rows = "10"><%=@input %></textarea>
+  <p class = "label">メモタイトル</p>  
+  <textarea class = "input_title" name="title_edited" ><%=@title %></textarea>  
+  </div>
+  <div>
+  <p class = "label">メモ本文</p>  
+  <textarea class = "input_main" name="main_edited" rows = "10"><%=@main %></textarea>
     <div>
       <input type="submit" value="更新">
     </div>

@@ -1,7 +1,17 @@
-
+<p class = "label">メモタイトル</p>
+<div class = "title">
+<p>
+    <% File.open("title/#{@id}.txt") do |f| %>
+      <% f.each_line do |line| %>
+      <%= line %>
+      <% end %>
+    <% end %>
+  </p>
+</div>
+<p class = "label">メモ本文</p>  
 <div class = "main">
   <p>
-    <% File.open("#{@user}.txt") do |f| %>
+    <% File.open("main/#{@id}.txt") do |f| %>
       <% f.each_line do |line| %>
       <%= line %>
       </br>
@@ -9,8 +19,15 @@
     <% end %>
   </p>
 </div>
-<form action="<%= "/memo/#{@user}/edit" %>" method="get">
+<form action="<%= "/memo/#{@id}/edit" %>" method="get">
   <div>
     <input type="submit" value="編集する">
+  </div>
+</form>
+
+<form action="<%= "/memo/#{@id}" %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <div>
+    <input type="submit" value="削除する">
   </div>
 </form>

@@ -1,8 +1,15 @@
-<form action="<%= "/memo/#{@user}" %>" method="post">
+<form action="<%= "/memo/#{@id}" %>" method="post">
   <div>
     <div>
-    <textarea class = "input" name="memo_main"></textarea>
+    <p class = "label">メモタイトル</p>  
+    <textarea class = "input_title" name="memo_title" ></textarea>
     </div>
+    
+    <div>
+    <p class = "label">メモ本文</p>  
+    <textarea class = "input_main" name="memo_main" rows = "10"></textarea>
+    </div>
+    
     <div>
       <input type = "submit" value = "保存">
     </div>

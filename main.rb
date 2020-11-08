@@ -1,49 +1,67 @@
 require "sinatra"
 require "sinatra/reloader"
+require "securerandom"
 
 get '/memo' do
+  rbfiles = File.join("*.txt")
+  @files = Dir.glob(rbfiles, base: "title") 
   erb :index
 end
 
-post '/memo/new' do
-  @user = params[:user_name]
-  f = File.open("#{@user}.txt", "w") 
-  f.close
-  redirect "/memo/#{@user}/new"
+post '/memo/:id/new' do
+  @id = params[:id]
+  f_title = File.open("title/#{@id}.txt", "w") 
+  f_title.close
+  f_main = File.open("main/#{@id}.txt", "w") 
+  f_main.close
+  redirect "/memo/#{@id}/new"
 end
 
-post '/memo/existing' do
-  @user = params[:user_name]
-  redirect "/memo/#{@user}"
-end
-
-get '/memo/:user_name/new' do
-  @user = params[:user_name]
+get '/memo/:id/new' do
+  @id = params[:id]
   erb :input
 end
 
-post '/memo/:user_name' do
-  @user = params[:user_name]
-  @input = params[:memo_main]
-  File.open("#{@user}.txt", "w") do |f|
-    f.puts("#{@input}")
+post '/memo/:id' do
+  @id = params[:id]
+  @title = params[:memo_title]
+  @main = params[:memo_main]
+  File.open("title/#{@id}.txt", "w") do |f|
+    f.puts("#{@title}")
+  end
+  File.open("main/#{@id}.txt", "w") do |f|
+    f.puts("#{@main}")
   end
   erb :call
 end
 
-get '/memo/:user_name' do
-  @user = params[:user_name]
-  if params[:memo_edited]
-    @edited = params[:memo_edited]
-    File.open("#{@user}.txt", "w") do |f|
-      f.puts("#{@edited}")
+get '/memo/:id' do
+  @id = params[:id]
+  if params[:title_edited]
+    @title_edited = params[:title_edited]
+    File.open("title/#{@id}.txt", "w") do |f|
+      f.puts("#{@title_edited}")
+    end
+  end
+  if params[:main_edited]
+    @main_edited = params[:main_edited]
+    File.open("main/#{@id}.txt", "w") do |f|
+      f.puts("#{@main_edited}")
     end
   end
   erb :call
 end
 
-get '/memo/:user_name/edit' do
-  @user = params[:user_name]
-  @input = File.read("#{@user}.txt")
+get '/memo/:id/edit' do
+  @id = params[:id]
+  @title = File.read("title/#{@id}.txt")
+  @main = File.read("main/#{@id}.txt")
   erb :edit
+end
+
+delete '/memo/:id' do
+  @id = params[:id]
+  FileUtils.rm("title/#{@id}.txt")
+  FileUtils.rm("main/#{@id}.txt")
+  erb :delete
 end
