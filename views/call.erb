@@ -1,6 +1,6 @@
 <p class = "label">メモタイトル</p>
 <div class = "title">
-<p>
+  <p>
     <% File.open("title/#{@id}.txt") do |f| %>
       <% f.each_line do |line| %>
       <%= line %>

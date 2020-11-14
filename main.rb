@@ -3,34 +3,26 @@ require "sinatra/reloader"
 require "securerandom"
 
 get '/memo' do
+  @id= SecureRandom.alphanumeric(8)
   rbfiles = File.join("*.txt")
   @files = Dir.glob(rbfiles, base: "title") 
   erb :index
 end
 
-post '/memo/:id/new' do
-  @id = params[:id]
-  f_title = File.open("title/#{@id}.txt", "w") 
-  f_title.close
-  f_main = File.open("main/#{@id}.txt", "w") 
-  f_main.close
-  redirect "/memo/#{@id}/new"
-end
-
 get '/memo/:id/new' do
   @id = params[:id]
-  erb :input
+  erb :new
 end
 
 post '/memo/:id' do
   @id = params[:id]
-  @title = params[:memo_title]
-  @main = params[:memo_main]
+  title = params[:memo_title]
+  main = params[:memo_main]
   File.open("title/#{@id}.txt", "w") do |f|
-    f.puts("#{@title}")
+    f.puts("#{title}")
   end
   File.open("main/#{@id}.txt", "w") do |f|
-    f.puts("#{@main}")
+    f.puts("#{main}")
   end
   erb :call
 end

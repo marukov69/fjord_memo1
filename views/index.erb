@@ -1,7 +1,6 @@
 <form class="pure-form pure-form-stacked">
   <div>
-  <% id= SecureRandom.alphanumeric(8) %>
-    <button type = "submit" formaction="<%="/memo/#{id}/new"%>" formmethod="get" class="pure-button pure-button-primary">新規作成</button>
+    <button type = "submit" formaction="<%="/memo/#{@id}/new"%>" formmethod="get" class="pure-button pure-button-primary">新規作成</button>
   </div>
 </form>
 <div>
@@ -15,7 +14,7 @@
       <% File.open("title/#{file}") do |f| %>
         <% f.each_line do |line| %>
           <% if line =~ /^\s+/ %>
-          （タイトルがありません）
+          _
           <% else %>
           <%= line %>
           <% end %>  
